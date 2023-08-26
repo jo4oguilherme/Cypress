@@ -3,7 +3,7 @@
 
 describe('LoginPage', () => {
 
-    it.skip('New User Signup', ()=> {
+    it('New User Signup', ()=> {
         
         cy.visit('/login')
         cy.get('[data-qa="signup-name"]').type('Avocado')
@@ -25,32 +25,39 @@ describe('LoginPage', () => {
         cy.get('[data-qa="zipcode"]').type('00001')
         cy.get('[data-qa="mobile_number"]').type('00142121')
         cy.get('[data-qa="create-account"]').click()
-        cy.get('[data-qa="continue-button"]').click()
+        
+        cy.get('[data-qa="continue-button"]').type('{enter}')
+        
+        
+        //Checking
+
+        cy.get('.header-middle > .container > .row').should('contain.text', 'Logout')
+        
     
     
     })
         
-    it.skip('Invalid Login - wrong password', ()=> {
+    it('Invalid Login - wrong password', ()=> {
         
         
         cy.visit('/login')
         cy.get('[data-qa="login-email"]').type('avocado@email.com')
   
         cy.get('[data-qa="login-password"]').type('orange{enter}')
-        
+        cy.get('#form > .container > .row > .col-sm-offset-1').should('contain.text', 'incorrect')
         //function 
         //loginUser("avocado@email.com", "orange")
     
     })
 
-    it.skip('Invalid Login - wrong email', ()=> {
+    it('Invalid Login - wrong email', ()=> {
         
         
         cy.visit('/login')
         cy.get('[data-qa="login-email"]').type('orange@email.com')
   
         cy.get('[data-qa="login-password"]').type('avocado1234{enter}')
-        
+        cy.get('#form > .container > .row > .col-sm-offset-1').should('contain.text', 'incorrect')
         //function 
         //loginUser("orange@email.com", "avocado1234")
     
@@ -73,6 +80,7 @@ describe('LoginPage', () => {
         
         cy.visit('/delete_account')
 
+        cy.url().should('include', '/delete_account')
 
     })   
 
